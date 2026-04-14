@@ -30,7 +30,7 @@
 
 ## 1. Overview
 
-Gate2Travel provides a hotel booking API that lets third-party partners search live hotel inventory, pre-book rooms, confirm bookings, and manage cancellations. Gate2Travel acts as an intermediary reseller on top of TBO Holidays' hotel inventory, which covers hundreds of thousands of properties worldwide.
+Gate2Travel provides a hotel booking API that lets third-party partners search live hotel inventory, pre-book rooms, confirm bookings, and manage cancellations. The platform covers hundreds of thousands of properties worldwide.
 
 The typical integration flow is:
 
@@ -368,7 +368,7 @@ The `data` field contains a list of hotel results, each with bookable rooms.
       "rooms": [
         {
           "name": ["Deluxe Room, 1 King Bed"],
-          "bookingCode": "1120548!TB!2!TB!4ee85bb9-9ca6-4c66-8a8a-524bfdd5ae2b",
+          "bookingCode": "G2T-1120548-R2-4ee85bb9ca664c668a8a524bfdd5ae2b",
           "inclusion": "Free WiFi",
           "totalFare": 320.00,
           "totalTax": 52.10,
@@ -416,7 +416,7 @@ The `data` field contains a list of hotel results, each with bookable rooms.
 
 | Field | Type | Description |
 |---|---|---|
-| `hotelCode` | String | Internal TBO hotel code. |
+| `hotelCode` | String | Internal hotel code. |
 | `hotelName` | String | Hotel name enriched from Gate2Travel's database. |
 | `image` | String | Hotel thumbnail image URL. |
 | `currency` | String | Currency of all pricing fields. |
@@ -462,7 +462,7 @@ Validates that the selected room is still available and confirms the up-to-date 
 
 ```json
 {
-  "bookingCode": "1120548!TB!2!TB!4ee85bb9-9ca6-4c66-8a8a-524bfdd5ae2b"
+  "bookingCode": "G2T-1120548-R2-4ee85bb9ca664c668a8a524bfdd5ae2b"
 }
 ```
 
@@ -481,7 +481,7 @@ Same structure as the availability response but with additional fields:
       "rooms": [
         {
           "name": ["Deluxe Room, 1 King Bed"],
-          "bookingCode": "1120548!TB!2!TB!4ee85bb9-9ca6-4c66-8a8a-524bfdd5ae2b",
+          "bookingCode": "G2T-1120548-R2-4ee85bb9ca664c668a8a524bfdd5ae2b",
           "inclusion": "Free WiFi",
           "dayRates": [[{ "basePrice": 155.50 }], [{ "basePrice": 112.50 }]],
           "totalFare": 320.00,
@@ -558,7 +558,7 @@ Confirms and vouchers the booking. This is the final step that charges the accou
 
 ```json
 {
-  "bookingCode": "1120548!TB!2!TB!4ee85bb9-9ca6-4c66-8a8a-524bfdd5ae2b",
+  "bookingCode": "G2T-1120548-R2-4ee85bb9ca664c668a8a524bfdd5ae2b",
   "customerDetails": [
     {
       "customerNames": [
@@ -590,7 +590,7 @@ Confirms and vouchers the booking. This is the final step that charges the accou
 
 ```json
 {
-  "bookingCode": "1120548!TB!4!TB!8bd7a82e-439a-4b2d-869d-09de4456e482",
+  "bookingCode": "G2T-1120548-R4-8bd7a82e439a4b2d869d09de4456e482",
   "customerDetails": [
     {
       "customerNames": [
@@ -854,7 +854,7 @@ The complete flow from Availability to Book must be completed within **30 minute
 
 6. **`BookingCode` is session-scoped.** Do not cache or reuse a `BookingCode` across separate user sessions. If the session expires (status `315`), restart from availability.
 
-7. **`recommendedSellingRate`.** The TBO-set minimum reselling price. You may not sell the room at a rate lower than this value.
+7. **`recommendedSellingRate`.** The Gate2Travel-set minimum reselling price. You may not sell the room at a rate lower than this value.
 
 8. **`clientReferenceId`** should be unique per booking and traceable in your own system. It is echoed back in the Book response and included in booking detail calls.
 
