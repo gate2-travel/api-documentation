@@ -81,17 +81,17 @@ Authorization: Basic <base64(username:password)>
 {
   "success": true,
   "message": "Operation successful",
+  "traceId": "0c6b01f3-ddb6-4842-82b1-3f98f458a14e",
   "data": {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-    "refreshToken": "550e8400-e29b-41d4-a716-446655440000"
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBQkIiLCJpYXQiOjE3NzYxNTM3ODEsImlzcyI6ImdhdGUyLnRyYXZlbCIsImV4cCI6MTc3NjE1NDY4MX0.KFDxYRvm0L6fUbEky8IkaJlmSgyfM9RfTn_hfYa55ZY"
   }
 }
 ```
 
 | Field | Type | Description |
 |---|---|---|
-| `data.accessToken` | String | JWT token. Pass as `Bearer` token in subsequent requests. |
-| `data.refreshToken` | String | UUID token. Use to obtain a new access token when it expires. |
+| `data.accessToken` | String | JWT token. Pass as `Bearer` token in all subsequent requests. |
+| `traceId` | String | Unique request trace ID. Include this when reporting issues to Gate2Travel support. |
 
 ### 3.2 Using the Token
 
@@ -101,28 +101,7 @@ Include the access token in the `Authorization` header for all subsequent reques
 Authorization: Bearer <accessToken>
 ```
 
-### 3.3 Refresh Token
-
-Use the refresh token to obtain a new access token without re-entering credentials.
-
-| | |
-|---|---|
-| **Method** | `POST` |
-| **URL** | `https://api.gate2.travel/ms-main/api/v1/auth/refresh-token` |
-
-#### Request
-
-```json
-{
-  "refreshToken": "550e8400-e29b-41d4-a716-446655440000"
-}
-```
-
-#### Response
-
-Same structure as the login response — returns a new `accessToken` and `refreshToken`.
-
-> **Token lifetime:** Access tokens expire after a short period. Refresh tokens are valid for 30 days. When the refresh token itself expires, re-authenticate using your credentials.
+> **Token lifetime:** The access token has a short expiry. When it expires, re-authenticate by calling the login endpoint again with your credentials.
 
 ---
 
